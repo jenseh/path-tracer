@@ -1,0 +1,94 @@
+# depslib dependency file v1.0
+1366817993 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/main.cpp
+	"PathTracer.h"
+	"Scene.h"
+	<ctime>
+
+1366714160 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Ray.cpp
+	"Ray.h"
+
+1366235526 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Ray.h
+	<glm/glm.hpp>
+
+1366243746 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Camera.cpp
+	"Camera.h"
+
+1366221047 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Camera.h
+	"Ray.h"
+
+1366813699 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Scene.cpp
+	"Scene.h"
+	"Sphere.h"
+	"Square.h"
+
+1366811379 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Scene.h
+	<vector>
+	"Ray.h"
+	"Intersection.h"
+	"Camera.h"
+
+1366706520 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Intersection.h
+	<cmath>
+	<glm/glm.hpp>
+	"Intersectable.h"
+
+1366706520 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Intersection.cpp
+	"Intersection.h"
+
+1366816755 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Intersectable.h
+	<glm/glm.hpp>
+	"Ray.h"
+
+1366664333 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Sphere.cpp
+	"Sphere.h"
+	"Intersection.h"
+
+1366639762 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Sphere.h
+	"Intersectable.h"
+
+1366706699 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Square.cpp
+	"Square.h"
+	"Intersection.h"
+
+1366639762 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Square.h
+	"Intersectable.h"
+
+1366651289 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/AABB.cpp
+	"AABB.h"
+
+1366651324 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/AABB.h
+	"Intersectable.h"
+	<vector>
+
+1366816181 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Triangle.cpp
+	"Triangle.h"
+	"Intersection.h"
+
+1366816214 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Triangle.h
+	"Intersectable.h"
+	<assimp/aiMesh.h>
+
+1366659868 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Model.cpp
+	"Model.h"
+	<assimp/aiScene.h>
+	<assimp/aiPostProcess.h>
+
+1366659858 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Model.h
+	<assimp/assimp.hpp>
+
+1366816726 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/PathTracer.cpp
+	"PathTracer.h"
+	"Ray.h"
+
+1366813699 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/PathTracer.h
+	"Scene.h"
+	"Camera.h"
+	"Image.h"
+
+1366816726 source:/media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Image.cpp
+	"Image.h"
+	<OpenEXR/ImfRgbaFile.h>
+
+1366813563 /media/Shared/Eigene Projekte/CodeBlocks Projekte/PathTracing/Image.h
+	<glm/glm.hpp>
+
