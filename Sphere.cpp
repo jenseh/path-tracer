@@ -2,8 +2,8 @@
 
 #include "Intersection.h"
 
-Sphere::Sphere(float r, const vec3& pos, const vec3& ke, const vec3& kd)
-    : radius(r), position(pos), emission(ke), diffuse(kd) {}
+Sphere::Sphere(float r, const vec3& pos, Material* material)
+    : radius(r), position(pos), material(material) {}
 
 bool Sphere::intersect(Ray& ray, Intersection& its) {
 
@@ -26,12 +26,23 @@ bool Sphere::intersect(Ray& ray, Intersection& its) {
     return false;
 }
 
+void Sphere::getAABB(vec3& lbf, vec3& rtn) {
+
+    lbf = position - vec3(radius);
+    rtn = position + vec3(radius);
+}
+
+vec3 Sphere::getCenter() {
+
+    return position;
+}
+
 vec3 Sphere::getEmission(Intersection* its) {
 
-    return emission;
+    return material->emission;
 }
 
 vec3 Sphere::getDiffuse(Intersection* its) {
 
-    return diffuse;
+    return material->diffuse;
 }

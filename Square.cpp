@@ -2,8 +2,8 @@
 
 #include "Intersection.h"
 
-Square::Square(float s, const vec3& p, const vec3& n, const vec3& t, const vec3& ke, const vec3& kd)
-    : size(s), position(p), emission(ke), diffuse(kd) {
+Square::Square(float s, const vec3& p, const vec3& n, const vec3& t, Material* material)
+    : size(s), position(p), material(material) {
 
     normal = normalize(n);
     bitangent = normalize(cross(normal, t));
@@ -20,8 +20,8 @@ bool Square::intersect(Ray& ray, Intersection& its) {
     if(t < its.getT() && t > 0.000001) {
         vec3 pos = ray.getPosition(t);
 
-        if((abs(dot(pos - position, tangent)) > size/2)
-        || (abs(dot(pos - position, bitangent)) > size/2))
+        if((abs(dot(pos - position, tangent)) > size / 2)
+        || (abs(dot(pos - position, bitangent)) > size / 2))
             return false;
 
         its.set(t, pos, normal, tangent, this);
@@ -31,12 +31,29 @@ bool Square::intersect(Ray& ray, Intersection& its) {
     return false;
 }
 
+void Square::getAABB(vec3& lbf, vec3& rtn) {
+
+    vec3 p = position + size / 2 * (tangent + bitangent);
+    lbf = p; rtn = p;
+    p = position + size / 2 * (tangent - bitangent);
+    lbf = min(lbf, p); rtn = max(rtn, p);
+    p = position - size / 2 * (tangent + bitangent);
+    lbf = min(lbf, p); rtn = max(rtn, p);
+    p = position - size / 2 * (tangent - bitangent);
+    lbf = min(lbf, p); rtn = max(rtn, p);
+}
+
+vec3 Square::getCenter() {
+
+    return position;
+}
+
 vec3 Square::getEmission(Intersection* its) {
 
-    return emission;
+    return material->emission;
 }
 
 vec3 Square::getDiffuse(Intersection* its) {
 
-    return diffuse;
+    return material->diffuse;
 }

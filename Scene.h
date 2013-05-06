@@ -1,12 +1,11 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <vector>
-using namespace std;
-
 #include "Ray.h"
 #include "Intersection.h"
 #include "Camera.h"
+#include "AABB.h"
+#include "Material.h"
 
 class Scene {
 
@@ -16,6 +15,8 @@ class Scene {
         ~Scene();
 
         void addObject(Intersectable* object);
+        void addAABB(AABB* aabb);
+        void buildBVH();
 
         bool intersect(Ray& ray, Intersection& its);
 
@@ -23,8 +24,9 @@ class Scene {
 
     private:
 
-        vector<Intersectable*> objects;
         Camera* camera;
+
+        AABB rootNode;
 };
 
 #endif // SCENE_H

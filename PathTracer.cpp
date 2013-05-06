@@ -4,6 +4,8 @@
 
 PathTracer::PathTracer(const unsigned int width, const unsigned int height, const unsigned int samples, Scene* scene)
     : width(width), height(height), samples(samples), scene(scene) {
+
+        scene->buildBVH();
 }
 
 void PathTracer::generateImage(Image& image) {
@@ -18,7 +20,7 @@ void PathTracer::generateImage(Image& image) {
                 vec3 color = vec3(0.0f);        // akkumuliert die gewichteten Emissionsterme
                 vec3 relevance = vec3(1.0f);    // akkumuliert die Gewichte
 
-                Ray inRay = scene->generateCameraRay(x, y);
+                Ray inRay = scene->generateCameraRay(rand01() - 0.5f + x, rand01() - 0.5f + y);
 
                 Intersection intersection;
                 float alpha = 1.0f;
@@ -26,6 +28,7 @@ void PathTracer::generateImage(Image& image) {
 
                     color += intersection.getEmission() * relevance;
 
+                    
                     vec3 randDir;
                     float probDensity;
                     getRandomHemisphereDir(intersection, randDir, probDensity);
@@ -34,14 +37,14 @@ void PathTracer::generateImage(Image& image) {
 
                     relevance *= brdf(inRay, intersection, outRay)
                                 * dot(intersection.getNormal(), outRay.direction)
-                                / probDensity
-                                / alpha;
-
-                    alpha = 0.9f;
-                    inRay = outRay;
+                                / probDensity;
+					
+                    alpha = min(1.0f, max(max(relevance.x, relevance.y), relevance.z)) * 0.8f;
+					relevance /= alpha;
+					
+					inRay = outRay;
                     intersection.reset();
                 }
-
 
                 color /= (float) samples;
 

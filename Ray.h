@@ -14,6 +14,7 @@ class Ray {
 
         vec3 origin;
         vec3 direction;
+        vec3 inv_dir;
 };
 
 #endif // RAY_H
