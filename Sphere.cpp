@@ -3,7 +3,10 @@
 #include "Intersection.h"
 
 Sphere::Sphere(float r, const vec3& pos, Material* material)
-    : radius(r), position(pos), material(material) {}
+    : radius(r), position(pos) {
+	
+	this->material = material;
+}
 
 bool Sphere::intersect(Ray& ray, Intersection& its) {
 
@@ -37,12 +40,11 @@ vec3 Sphere::getCenter() {
     return position;
 }
 
-vec3 Sphere::getEmission(Intersection* its) {
-
-    return material->emission;
-}
-
-vec3 Sphere::getDiffuse(Intersection* its) {
-
-    return material->diffuse;
+void Sphere::getRandomPos(vec3& position, vec3& normal, float& probability) {
+	
+	float theta = acos(1.0f - 2.0f * (float) rand() / RAND_MAX);
+	float phi = 6.28318f * (float) rand() / RAND_MAX;
+	normal = vec3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
+	position = this->position + radius * normal;
+	probability = 1.0f / (12.56637f * radius * radius);
 }

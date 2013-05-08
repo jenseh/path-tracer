@@ -15,9 +15,8 @@ class Square : public Intersectable {
 
         void getAABB(vec3& lbf, vec3& rtn);
         vec3 getCenter();
-
-        vec3 getEmission(Intersection* its);
-        vec3 getDiffuse(Intersection* its);
+		
+		void getRandomPos(vec3& position, vec3& normal, float& probability);
 
 
     private:
@@ -28,8 +27,6 @@ class Square : public Intersectable {
         vec3 normal;
         vec3 tangent;
         vec3 bitangent;
-
-        Material* material;
 };
 
 #endif // SQUARE_H

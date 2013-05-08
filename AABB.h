@@ -16,15 +16,14 @@ class AABB {
         void subdivide();
 
         bool intersect(Ray& ray, Intersection& intersection);
+        bool intersect(Ray& ray, float t);
 
         void getAABB(vec3& lbf, vec3& rtn);
-int count(){
-	int result = objects.size();
-	for(AABB* child : children) {
-		result += child->count();
-	}
-	return result;
-}
+		
+		void getLightsources(std::vector<Intersectable*>& lightsources);
+		
+		int count();
+		
     private:
 
         vec3 lbf = vec3(INFINITY);

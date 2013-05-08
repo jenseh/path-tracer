@@ -22,7 +22,7 @@ class Intersection {
 
         float getT();
 
-        void set(float t, vec3 position, vec3 normal, vec3 tangent, Intersectable* object);
+        void set(float t, vec3 position = vec3(), vec3 normal = vec3(), vec3 tangent = vec3(), Intersectable* object = NULL);
         void reset();
 
     private:

@@ -14,16 +14,13 @@ class Sphere : public Intersectable {
 
         void getAABB(vec3& lbf, vec3& rtn);
         vec3 getCenter();
-
-        vec3 getEmission(Intersection* its);
-        vec3 getDiffuse(Intersection* its);
+		
+		void getRandomPos(vec3& position, vec3& normal, float& probability);
 
     private:
 
         float radius;
         vec3 position;
-
-        Material* material;
 };
 
 #endif // SPHERE_H

@@ -19,14 +19,19 @@ class Scene {
         void buildBVH();
 
         bool intersect(Ray& ray, Intersection& its);
+        bool intersect(Ray& ray, float t);
 
         Ray generateCameraRay(const float x, const float y);
+		
+		void getRandomLight(vec3& position, vec3& normal, vec3& color, float& probability);
 
     private:
 
         Camera* camera;
 
         AABB rootNode;
+		
+		std::vector<Intersectable*> lightsources;
 };
 
 #endif // SCENE_H

@@ -3,8 +3,10 @@
 #include "Intersection.h"
 
 Square::Square(float s, const vec3& p, const vec3& n, const vec3& t, Material* material)
-    : size(s), position(p), material(material) {
+    : size(s), position(p) {
 
+	this->material = material;
+		
     normal = normalize(n);
     bitangent = normalize(cross(normal, t));
     tangent = cross(bitangent, normal);
@@ -48,12 +50,11 @@ vec3 Square::getCenter() {
     return position;
 }
 
-vec3 Square::getEmission(Intersection* its) {
-
-    return material->emission;
-}
-
-vec3 Square::getDiffuse(Intersection* its) {
-
-    return material->diffuse;
+void Square::getRandomPos(vec3& position, vec3& normal, float& probability) {
+	
+	float x = size * 0.5f - size * (float) rand() / RAND_MAX;
+	float y = size * 0.5f - size * (float) rand() / RAND_MAX;
+	position = this->position + x * tangent + y * bitangent;
+	normal = this->normal;
+	probability = 1.0f / (size * size);
 }

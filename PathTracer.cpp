@@ -22,30 +22,50 @@ void PathTracer::generateImage(Image& image) {
 
                 Ray inRay = scene->generateCameraRay(rand01() - 0.5f + x, rand01() - 0.5f + y);
 
-                Intersection intersection;
                 float alpha = 1.0f;
-                while(rand01() <= alpha && scene->intersect(inRay, intersection)) {
-
-                    color += intersection.getEmission() * relevance;
-
-                    
-                    vec3 randDir;
-                    float probDensity;
-                    getRandomHemisphereDir(intersection, randDir, probDensity);
-
-                    Ray outRay(intersection.getPosition(), randDir);
-
-                    relevance *= brdf(inRay, intersection, outRay)
-                                * dot(intersection.getNormal(), outRay.direction)
-                                / probDensity;
-					
-                    alpha = min(1.0f, max(max(relevance.x, relevance.y), relevance.z)) * 0.8f;
-					relevance /= alpha;
-					
-					inRay = outRay;
-                    intersection.reset();
-                }
-
+                Intersection intersection;
+				Intersection lightIntersection;
+				if(scene->intersect(inRay, intersection)) {
+					color += intersection.getEmission() * relevance;
+					do {
+						vec3 lightPos;
+						vec3 lightNorm;
+						vec3 lightColor;
+						float lightProb;
+						scene->getRandomLight(lightPos, lightNorm, lightColor, lightProb);
+						vec3 lightDir = lightPos - intersection.getPosition();
+						
+						Ray lightRay(intersection.getPosition(), lightDir);
+						float costhetai = dot(intersection.getNormal(), lightRay.direction);
+						float costhetaj = -dot(lightNorm, lightRay.direction);
+						
+						if(costhetai >= 0 && costhetaj >= 0 
+						&& !scene->intersect(lightRay, length(lightDir) * 0.9999)) {
+							color += relevance
+								* brdf(inRay, intersection, lightRay)
+								* costhetai * costhetaj
+								/ (lightProb * dot(lightDir, lightDir));
+						}
+						
+						
+						vec3 randDir;
+						float probDensity;
+						getRandomHemisphereDir(intersection, randDir, probDensity);
+	
+						Ray outRay(intersection.getPosition(), randDir);
+	
+						relevance *= brdf(inRay, intersection, outRay)
+									* dot(intersection.getNormal(), outRay.direction)
+									/ probDensity;
+						
+						alpha = min(1.0f, max(max(relevance.x, relevance.y), relevance.z)) * 0.9f;
+						relevance /= alpha;
+						
+						inRay = outRay;
+						intersection.reset();
+					} while(rand01() <= alpha && scene->intersect(inRay, intersection));
+				}
+				
                 color /= (float) samples;
 
                 pixel += color;

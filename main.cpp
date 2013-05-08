@@ -7,7 +7,7 @@ int main () {
 
     int width = 512;
     int height = 512;
-    int samples = 256;
+    int samples = 128;
 
     Scene scene(width, height);
 
@@ -37,5 +37,5 @@ int main () {
 
     image.saveToFile("./output.exr");
 
-    return system("exrdisplay ./output.exr");
+    return system("exrdisplay -1 ./output.exr");
 }

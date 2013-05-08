@@ -1,1 +1,1 @@
-./Debug/main.o ./Debug/AABB.o ./Debug/Camera.o ./Debug/Image.o ./Debug/Intersection.o ./Debug/Model.o ./Debug/PathTracer.o ./Debug/Ray.o ./Debug/Scene.o ./Debug/Sphere.o ./Debug/Square.o ./Debug/Triangle.o ./Debug/Material.o
+./Debug/main.o ./Debug/AABB.o ./Debug/Camera.o ./Debug/Image.o ./Debug/Intersection.o ./Debug/Model.o ./Debug/PathTracer.o ./Debug/Ray.o ./Debug/Scene.o ./Debug/Sphere.o ./Debug/Square.o ./Debug/Triangle.o ./Debug/Material.o ./Debug/Intersectable.o

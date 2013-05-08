@@ -23,12 +23,12 @@ vec3 Intersection::getBitangent() {
 
 vec3 Intersection::getEmission() {
 
-    return object->getEmission(this);
+    return object->getEmission(vec2());
 }
 
 vec3 Intersection::getDiffuse() {
 
-    return object->getDiffuse(this);
+    return object->getDiffuse(vec2());
 }
 
 float Intersection::getT() {

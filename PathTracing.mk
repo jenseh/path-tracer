@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Jens
-Date                   :=05/06/2013
+Date                   :=05/09/2013
 CodeLitePath           :="/home/jens/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
@@ -36,7 +36,7 @@ ObjectsFileList        :="PathTracing.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            :=  
-IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)/usr/include/OpenEXR $(IncludeSwitch). 
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). $(IncludeSwitch)/usr/include/OpenEXR 
 IncludePCH             := 
 RcIncludePath          := 
 Libs                   := $(LibrarySwitch)IlmImf $(LibrarySwitch)Half $(LibrarySwitch)assimp $(LibrarySwitch)rt $(LibrarySwitch)gomp 
@@ -59,7 +59,7 @@ CFLAGS   := -std=c++11 -O3 -fopenmp -g $(Preprocessors)
 ##
 CodeLiteDir:=/usr/share/codelite
 Objects0=$(IntermediateDirectory)/main$(ObjectSuffix) $(IntermediateDirectory)/AABB$(ObjectSuffix) $(IntermediateDirectory)/Camera$(ObjectSuffix) $(IntermediateDirectory)/Image$(ObjectSuffix) $(IntermediateDirectory)/Intersection$(ObjectSuffix) $(IntermediateDirectory)/Model$(ObjectSuffix) $(IntermediateDirectory)/PathTracer$(ObjectSuffix) $(IntermediateDirectory)/Ray$(ObjectSuffix) $(IntermediateDirectory)/Scene$(ObjectSuffix) $(IntermediateDirectory)/Sphere$(ObjectSuffix) \
-	$(IntermediateDirectory)/Square$(ObjectSuffix) $(IntermediateDirectory)/Triangle$(ObjectSuffix) $(IntermediateDirectory)/Material$(ObjectSuffix) 
+	$(IntermediateDirectory)/Square$(ObjectSuffix) $(IntermediateDirectory)/Triangle$(ObjectSuffix) $(IntermediateDirectory)/Material$(ObjectSuffix) $(IntermediateDirectory)/Intersectable$(ObjectSuffix) 
 
 
 
@@ -190,6 +190,14 @@ $(IntermediateDirectory)/Material$(DependSuffix): Material.cpp
 $(IntermediateDirectory)/Material$(PreprocessSuffix): Material.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Material$(PreprocessSuffix) "Material.cpp"
 
+$(IntermediateDirectory)/Intersectable$(ObjectSuffix): Intersectable.cpp $(IntermediateDirectory)/Intersectable$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/jens/.codelite/default/PathTracing/Intersectable.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Intersectable$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Intersectable$(DependSuffix): Intersectable.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Intersectable$(ObjectSuffix) -MF$(IntermediateDirectory)/Intersectable$(DependSuffix) -MM "Intersectable.cpp"
+
+$(IntermediateDirectory)/Intersectable$(PreprocessSuffix): Intersectable.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Intersectable$(PreprocessSuffix) "Intersectable.cpp"
+
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
 ##
@@ -235,6 +243,9 @@ clean:
 	$(RM) $(IntermediateDirectory)/Material$(ObjectSuffix)
 	$(RM) $(IntermediateDirectory)/Material$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Material$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/Intersectable$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/Intersectable$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/Intersectable$(PreprocessSuffix)
 	$(RM) $(OutputFile)
 	$(RM) "../.build-debug/PathTracing"
 

@@ -5,6 +5,7 @@
 using namespace glm;
 
 #include "Ray.h"
+#include "Material.h"
 
 class Intersection;
 
@@ -19,8 +20,16 @@ class Intersectable
         virtual void getAABB(vec3& lbf, vec3& rtn) = 0;
         virtual vec3 getCenter() = 0;
 
-        virtual vec3 getEmission(Intersection* its) = 0;
-        virtual vec3 getDiffuse(Intersection* its) = 0;
+		virtual void getRandomPos(vec3& position, vec3& normal, float& probability) = 0;
+
+        virtual vec3 getEmission(const vec2& texturecoords);
+        virtual vec3 getDiffuse(const vec2& texturecoords);
+		
+		virtual bool isLightsource();
+	
+	protected:
+		
+		Material* material;
 };
 
 #endif // INTERSECTABLE_H

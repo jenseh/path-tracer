@@ -68,10 +68,15 @@ vec3 Triangle::getCenter() {
     return vert0 + (edge1 + edge2) * 0.3333333f;
 }
 
-vec3 Triangle::getEmission(Intersection* its) {
-    return material->emission;
-}
-
-vec3 Triangle::getDiffuse(Intersection* its) {
-    return material->diffuse;
+void Triangle::getRandomPos(vec3& position, vec3& normal, float& probability) {
+	
+	float x = (float) rand() / RAND_MAX;
+	float y = (float) rand() / RAND_MAX;
+	if(x + y > 1) {
+		x = 1.0f - x;
+		y = 1.0f - y;
+	}
+	position = vert0 + x * edge1 + y * edge2;
+	normal = normalize(cross(edge1, edge2));
+	probability = 2.0f / length(cross(edge1, edge2));
 }

@@ -17,17 +17,14 @@ class Triangle : public Intersectable {
 
         void getAABB(vec3& lbf, vec3& rtn);
         vec3 getCenter();
-
-        vec3 getEmission(Intersection* its);
-        vec3 getDiffuse(Intersection* its);
+		
+		void getRandomPos(vec3& position, vec3& normal, float& probability);
 
     private:
 
         vec3 vert0;
         vec3 edge1;
         vec3 edge2;
-		
-		Material* material;
 };
 
 #endif // TRIANGLE_H
