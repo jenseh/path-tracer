@@ -24,6 +24,8 @@ class Intersectable
 
         virtual vec3 getEmission(const vec2& texturecoords);
         virtual vec3 getDiffuse(const vec2& texturecoords);
+		virtual vec3 getSpecular();
+		virtual float getSpecularExponent();
 		
 		virtual bool isLightsource();
 	

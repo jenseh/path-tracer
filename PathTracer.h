@@ -17,11 +17,14 @@ class PathTracer {
     private:
 
         static float rand01();
+		static float avg(const vec3& v);
 
-        static void getRandomHemisphereDir(Intersection& its, vec3& randDir, float& probDensity);
+        static vec3 getRandomCosineDir(const vec3& normal, const vec3& tangent, const vec3& bitangent, float exponent, float& probDensity);
 
-        static vec3 brdf(const Ray& outRay, Intersection& its, const Ray& inRay);
+		static const vec3 brdf(const Ray& inRay, const Intersection& its, const Ray& outRay);
 
+        vec3 getLightSample(const Intersection& its, const vec3& relevance, const Ray& inRay);
+		vec3 getPathSample(const Ray& inRay, const Intersection& its, Ray& outRay);
 
         const unsigned int width;
         const unsigned int height;

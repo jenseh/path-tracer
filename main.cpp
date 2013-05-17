@@ -7,7 +7,7 @@ int main () {
 
     int width = 512;
     int height = 512;
-    int samples = 128;
+    int samples = 16;
 
     Scene scene(width, height);
 

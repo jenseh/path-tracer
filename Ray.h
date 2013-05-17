@@ -8,7 +8,7 @@ class Ray {
 
     public:
 
-        Ray(const vec3& origin, const vec3& direction);
+        Ray(const vec3& origin = vec3(), const vec3& direction = vec3(0.0f, 0.0f, -1.0f));
 
         vec3 getPosition(float t);
 
