@@ -2,52 +2,51 @@
 
 #include "Ray.h"
 
-PathTracer::PathTracer(const unsigned int width, const unsigned int height, const unsigned int samples, Scene* scene)
-    : width(width), height(height), samples(samples), scene(scene) {
+PathTracer::PathTracer(const unsigned int width, const unsigned int height, Scene* scene)
+    : width(width), height(height), scene(scene) {
 
         scene->buildBVH();
 }
 
-void PathTracer::generateImage(Image& image) {
+void PathTracer::generateImage(Image& image, const unsigned int samples) {
 
-    for(unsigned int y = 0; y < height; y++) {
-        printf("\rBild zu %3.0f%% berechnet.", 100.0 * y / height);fflush(stdout);
-        #pragma omp parallel for
-        for(unsigned int x = 0; x < width; x++) {
-            vec3 pixel;
-            for(unsigned int n = 0; n < samples; n++) {
-
-                vec3 color = vec3(0.0f);        // akkumuliert die gewichteten Emissionsterme
-                vec3 relevance = vec3(1.0f);    // akkumuliert die Gewichte
-
-                Ray currRay = scene->generateCameraRay(rand01() - 0.5f + x, rand01() - 0.5f + y);
-
-                float alpha = 1.0f;
-                Intersection intersection;
-				Intersection lightIntersection;
-				if(scene->intersect(currRay, intersection)) {
-					color += intersection.getEmission() * relevance;
-					do {
-						color += getLightSample(intersection, relevance, currRay);
-						
-						Ray nextRay;
-						relevance *= getPathSample(currRay, intersection, nextRay);
-						
-						alpha = min(1.0f, max(max(relevance.x, relevance.y), relevance.z)) * 0.9f;
-						relevance /= alpha;
-						
-						currRay = nextRay;
-						intersection.reset();
-					} while(rand01() <= alpha && scene->intersect(currRay, intersection));
-				}
-				
-                color /= (float) samples;
-
-                pixel += color;
-            }
-            image.setPixel(x, y, pixel);
-        }
+    for(unsigned int n = 0; n < samples; n++) {
+        printf("\rBild zu %3.0f%% berechnet.", 100.0 * n / samples);fflush(stdout);
+		refineImage(image, n);
     }
+}
+
+void PathTracer::refineImage(Image& image, const unsigned int n) {
+	#pragma omp parallel for collapse(2)
+	for(unsigned int y = 0; y < height; y++) {
+		for(unsigned int x = 0; x < width; x++) {
+            
+			vec3 color = vec3(0.0f);        // akkumuliert die gewichteten Emissionsterme
+			vec3 relevance = vec3(1.0f);    // akkumuliert die Gewichte
+
+			Ray currRay = scene->generateCameraRay(rand01() - 0.5f + x, rand01() - 0.5f + y);
+
+			float alpha = 1.0f;
+			Intersection intersection;
+			Intersection lightIntersection;
+			if(scene->intersect(currRay, intersection)) {
+				color += intersection.getEmission();
+				do {
+					color += getLightSample(intersection, relevance, currRay);
+					
+					Ray nextRay;
+					relevance *= getPathSample(currRay, intersection, nextRay);
+					
+					alpha = min(1.0f, max(max(relevance.x, relevance.y), relevance.z)) * 0.9f;
+					relevance /= alpha;
+					
+					currRay = nextRay;
+					intersection.reset();
+				} while(rand01() <= alpha && scene->intersect(currRay, intersection));
+			}
+		image.setPixel(x, y, ((float) n * image.getPixel(x, y) + min(vec3(10.0f), color)) / (n + 1.0f));
+		}
+	}
 }
 
 vec3 PathTracer::getLightSample(const Intersection& its, const vec3& relevance, const Ray& inRay) {
@@ -63,7 +62,7 @@ vec3 PathTracer::getLightSample(const Intersection& its, const vec3& relevance, 
 	float costhetaj = -dot(lightNorm, lightRay.direction);
 						
 	if(costhetai >= 0 && costhetaj >= 0 && !scene->intersect(lightRay, length(lightDir) * 0.99999f)) {
-		return relevance
+		return lightColor * relevance
 				* brdf(inRay, its, lightRay)
 				* costhetai * costhetaj
 				/ (lightProb * dot(lightDir, lightDir));

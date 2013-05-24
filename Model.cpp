@@ -38,12 +38,8 @@ AABB* Model::createBVH(aiNode* node, const mat4& transformation, Material* mater
 		for(unsigned int i = 0; i < model->mNumMaterials; i++) {
 			
 			aiMaterial* mat = model->mMaterials[i];
-			vec3 diffuse(1.0f);
-			vec3 emission(0.0f);
-			mat->Get(AI_MATKEY_COLOR_DIFFUSE, *(aiColor3D*)&diffuse);
-			mat->Get(AI_MATKEY_COLOR_AMBIENT, *(aiColor3D*)&emission); // .obj besitzt keinen Emissionsparameter
-			materials[i].diffuse = diffuse;
-			materials[i].emission = emission;
+			mat->Get(AI_MATKEY_COLOR_DIFFUSE, *(aiColor3D*)&materials[i].diffuse);
+			mat->Get(AI_MATKEY_COLOR_AMBIENT, *(aiColor3D*)&materials[i].emission); // .obj besitzt keinen Emissionsparameter
 		}
 	}
 	

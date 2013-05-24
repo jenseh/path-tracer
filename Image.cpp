@@ -2,6 +2,7 @@
 
 #include <OpenEXR/ImfRgbaFile.h>
 using namespace Imf;
+#include <GL/gl.h>
 
 Image::Image(const unsigned int width, const unsigned int height)
     : width(width), height(height) {
@@ -12,6 +13,10 @@ Image::Image(const unsigned int width, const unsigned int height)
 Image::~Image() {
 
     delete[] pixels;
+}
+
+const vec3& Image::getPixel(const unsigned int x, const unsigned int y) {
+	return pixels[x + y * width];
 }
 
 void Image::setPixel(const unsigned int x, const unsigned int y, const vec3& pixel) {
@@ -34,4 +39,9 @@ void Image::saveToFile(const char* filename) {
     RgbaOutputFile file(filename, width, height, WRITE_RGBA);
     file.setFrameBuffer(ps, 1, width);
     file.writePixels(height);
+}
+
+void Image::draw() {
+	
+	glDrawPixels(width, height, GL_RGB, GL_FLOAT, pixels);
 }

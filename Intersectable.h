@@ -1,9 +1,6 @@
 #ifndef INTERSECTABLE_H
 #define INTERSECTABLE_H
 
-#include <glm/glm.hpp>
-using namespace glm;
-
 #include "Ray.h"
 #include "Material.h"
 

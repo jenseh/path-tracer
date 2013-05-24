@@ -17,13 +17,13 @@ Scene::Scene(const int width, const int height) {
     Model bunny("./data/bun_zipper.ply");
     bunny.addToScene(this, 
 					 scale(translate(mat4(), vec3(0.6f, -1.15f, 0.0f)), vec3(5.0f)),
-					 new Material(vec3(0.9f), vec3(0.0f), vec3(0.0f), 10.0f));
+					 new Material(vec3(0.6f), vec3(0.0f), vec3(0.3f), 10.0f));
 					 
 
 	Model dragon("./data/dragon_vrip.ply");
 	dragon.addToScene(this,
 					  scale(translate(mat4(), vec3(-0.5f, -1.25f, 0.0f)), vec3(-5.0f, 5.0f, -5.0f)),
-					  new Material(vec3(0.9f), vec3(0.0f), vec3(0.0f, 0.0f, 0.0f), 50.0f));
+					  new Material(vec3(0.0f), vec3(0.0f), vec3(0.9f, 0.5f, 0.0f), 50.0f));
 	
 	printf("%d Triangles\n", rootNode.count());
 }

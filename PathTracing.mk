@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Jens
-Date                   :=05/17/2013
+Date                   :=05/24/2013
 CodeLitePath           :="/home/jens/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
@@ -39,8 +39,8 @@ LinkOptions            :=
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). $(IncludeSwitch)/usr/include/OpenEXR 
 IncludePCH             := 
 RcIncludePath          := 
-Libs                   := $(LibrarySwitch)IlmImf $(LibrarySwitch)Half $(LibrarySwitch)assimp $(LibrarySwitch)rt $(LibrarySwitch)gomp 
-ArLibs                 :=  "IlmImf" "Half" "assimp" "rt" "gomp" 
+Libs                   := $(LibrarySwitch)IlmImf $(LibrarySwitch)Half $(LibrarySwitch)assimp $(LibrarySwitch)rt $(LibrarySwitch)gomp $(LibrarySwitch)glfw 
+ArLibs                 :=  "IlmImf" "Half" "assimp" "rt" "gomp" "glfw" 
 LibPath                := $(LibraryPathSwitch). 
 
 ##

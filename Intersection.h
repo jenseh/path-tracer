@@ -3,9 +3,6 @@
 
 #include <cmath>
 
-#include <glm/glm.hpp>
-using namespace glm;
-
 #include "Intersectable.h"
 
 class Intersection {

@@ -9,10 +9,10 @@ class PathTracer {
 
     public:
 
-        PathTracer(const unsigned int width, const unsigned int height, const unsigned int samples, Scene* scene);
+        PathTracer(const unsigned int width, const unsigned int height, Scene* scene);
 
-        void generateImage(Image& image);
-
+        void generateImage(Image& image, const unsigned int samples);
+		void refineImage(Image& image, const unsigned int n);
 
     private:
 
@@ -28,9 +28,7 @@ class PathTracer {
 
         const unsigned int width;
         const unsigned int height;
-        const unsigned int samples;
         Scene* scene;
-        vec3* image;
 };
 
 #endif // PATHTRACER_H
